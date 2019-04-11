@@ -13,7 +13,7 @@ SSH_KEY = paramiko.RSAKey(data=base64.b64decode(
 client = paramiko.SSHClient()
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 client.get_host_keys().add('games.brefend.com', 'ssh-rsa', SSH_KEY)
-client.connect(LOCAL_IP, username='kf2server', password='bonesniff')
+#client.connect(LOCAL_IP, username='kf2server', password='bonesniff')
 
 # class R710_Ssh:
 #     def __init__(self, lgsm_name):
@@ -32,4 +32,7 @@ client.connect(LOCAL_IP, username='kf2server', password='bonesniff')
 class R710_Lgsm(SSHClient):
     r710_ip = LOCAL_IP
 
+    def connect(self):
+# return 3tuple of std.
+        return stdin, stdout, stderr
     pass
