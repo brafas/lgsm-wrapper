@@ -33,6 +33,8 @@ class R710_Lgsm(SSHClient):
     r710_ip = LOCAL_IP
 
     def connect(self):
+        client = paramiko.SSHClient()
+
 # return 3tuple of std.
         return stdin, stdout, stderr
     pass

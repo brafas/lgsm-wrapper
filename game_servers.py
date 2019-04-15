@@ -4,10 +4,14 @@ from client import client
 
 NAME, IPADDR, LGSM_NAME = "Brazen Floor 2", "192.168.0.155", "kf2server"
 
-
+def r710_ssh():
+    client = paramiko.SSHClient()
+    stdin, stdout, stderr = client.exec_command(f"./{self.lgsm_name} start")
+    # make a ssh client instance
+    # return output of a command given in arguments perhaps.
 class GameServer: #The base class.
     # Server object
-    # define the IPAddress, the name of the server (friendly) and the name LGSM uses.
+    # Default address is always r710 for game servers
     ipaddr = "192.168.0.155"
 
     def __init__(self, name, ipaddr, lgsm_name):
@@ -37,7 +41,7 @@ class GameServer: #The base class.
 class KillingFloor2_S(GameServer):
 
     lgsm_name = "kf2server" #Provides lgsm_name variable data instead of stating on instantiation.
-    ports = ["27015", "7777"]
+    #ports = ["27015", "7777"]
 
     def __init__(self, name):
         self.name = name
