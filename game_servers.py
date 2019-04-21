@@ -1,6 +1,5 @@
 from client import SSH_KEY
 from client import r710_ssh
-import paramiko
 
 #from server import GameServer
 
@@ -41,8 +40,7 @@ class KillingFloor2_S(GameServer):
         self.name = name
 
     def start(self):
-        stdarr = r710_ssh("./kf2server start")
-        stdout = stdarr[1]
+        r710_ssh(f"./{lgsm_name} start")
 
     #define a custom start function for different types of kf2 servers.
 
@@ -54,6 +52,6 @@ class Rust_S(GameServer):
 
 # brazenfloor2 = GameServer(NAME, IPADDR, LGSM_NAME)
 
-brazenfloor2 = KillingFloor2_S(name=NAME)
+brazenfloor2 = KillingFloor2_S(name="Brazen Floor2")
 
 brazenfloor2.start()
