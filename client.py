@@ -12,13 +12,13 @@ SSH_KEY = paramiko.RSAKey(data=base64.b64decode(b'AAAAB3NzaC1yc2EAAAABJQAAAQEArh
         AGeVRNY6JNUut1fRhij5C8zXotndPvivIER0OidBmyTasRsFualAhz2UaF9LnWwDLKMhQJ2nhjdhy38bF2NNNdJdWHWetDhKRbiep1nN \
         n24Oh1J6iKs2P86AZq/+csO4b7EmqH8eRIwJ9iLoY+lZCjOZ82K7Esp4sxh5sSblWoxOpAfw=='))
 
-def r710_ssh(cmd):
+def r710_ssh(cmd, username, password):
     #send a cmd, return stdout. or stderr.. Close connection
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     client.get_host_keys().add('games.brefend.com', 'ssh-rsa', SSH_KEY)
     #Connection
-    client.connect(R710_IP, username="kf2server", password="bonesniff")
+    client.connect(R710_IP, username=username, password=password)
     stdin, stdout, stderr = client.exec_command(f"{cmd}")
     stdarr = [stdin, stdout, stderr]
     for line in stdout:
@@ -54,4 +54,3 @@ def r710_sftp():
             t.close()
         except:
             pass
-r710_sftp()
