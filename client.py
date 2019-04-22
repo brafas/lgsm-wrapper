@@ -30,6 +30,7 @@ client.get_host_keys().add('games.brefend.com', 'ssh-rsa', SSH_KEY)
 
 
 def r710_ssh(cmd):
+    #send a cmd, return stdout. or stderr.. Close connection
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     client.get_host_keys().add('games.brefend.com', 'ssh-rsa', SSH_KEY)
