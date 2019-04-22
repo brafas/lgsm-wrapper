@@ -19,12 +19,12 @@ class GameServer: #The base class.
         self.level = level
 
     def start(self): #default start for any server
-        client.connect(self.ipaddr, username=self.lgsm_name, password="bonesniff")
-        print("kf2server connected")
-        stdin, stdout, stderr = client.exec_command(f"./{self.lgsm_name} start")
-        for line in stdout:
-            print('... ' + line.strip('\n'))
-        client.close()
+            client.connect(self.ipaddr, username=self.lgsm_name, password="bonesniff")
+            print("kf2server connected")
+            stdin, stdout, stderr = client.exec_command(f"./{self.lgsm_name} start")
+            for line in stdout:
+                print('... ' + line.strip('\n'))
+            client.close()
 
      # def stop(self):
      #    client.connect(self.ipaddr, username=self.lgsm_name, password="bonesniff")
