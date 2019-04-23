@@ -1,5 +1,6 @@
 from client import r710_ssh
 from client import r710_sftp_get
+from server_settings import find_setting
 
 #from server import GameServer
 
@@ -14,7 +15,7 @@ class GameServer: #The base class.
         self.name = name
         self.lgsm_name = lgsm_name
 
-    def start(self): #default start for any server
+    def start(self, map): #default start for any server
         r710_ssh(f"./{self.lgsm_name} start", username=self.lgsm_name, password="bonesniff")
 
     def stop(self):
@@ -25,6 +26,13 @@ class KillingFloor2_S(GameServer):
     # lgsm_name = "kf2server" #Provides lgsm_name variable data instead of stating on instantiation.
     #ports = ["27015", "7777"]
     #define a custom start function for different types of kf2 servers.
+    def start(self, map="kf-outpost"):
+        if map == "kf-outpost":
+            #TODO: Find setting in kf2 config with regex
+            #Then seperate the value from the setting.
+            # Change the value based on input from function.
+            # change_setting()
+            r710_ssh(f"./{self/lgsm_name} start", username=self.lgsm_name, password="bonesniff")
     pass
 
 class Rust_S(GameServer):
@@ -36,6 +44,7 @@ class Minecraft_S(GameServer):
     def check_settings(self):
         #grab the mc server.properties file. Print it.
         serv_prop = r710_sftp_get(username=self.lgsm_name, password="bonesniff", filename="server.properties")
+        find_setting(serv_prop)
         #print(serv_prop.name)
 
     pass
