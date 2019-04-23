@@ -1,5 +1,5 @@
-from client import SSH_KEY
 from client import r710_ssh
+from client import r710_sftp_get
 
 #from server import GameServer
 
@@ -9,7 +9,7 @@ NAME, IPADDR, LGSM_NAME = "Brazen Floor 2", "192.168.0.155", "kf2server"
 class GameServer: #The base class.
     # Server object
     # Default address is always r710 for game servers
-    
+
     def __init__(self, name, lgsm_name):
         self.name = name
         self.lgsm_name = lgsm_name
@@ -33,6 +33,11 @@ class Rust_S(GameServer):
 
 class Minecraft_S(GameServer):
 
+    def check_settings(self):
+        #grab the mc server.properties file. Print it.
+        serv_prop = r710_sftp_get(username=self.lgsm_name, password="bonesniff", filename="server.properties")
+        #print(serv_prop.name)
+
     pass
 
 # brazenfloor2 = GameServer(NAME, IPADDR, LGSM_NAME)
@@ -40,4 +45,5 @@ class Minecraft_S(GameServer):
 #brazenfloor2 = KillingFloor2_S(name="Brazen Floor 2", lgsm_name="kf2server", level="KF-OUTPOST")
 brazecraft = Minecraft_S(name="Brazecraft", lgsm_name="mcserver")
 
-brazecraft.start()
+#brazecraft.start()
+brazecraft.check_settings()

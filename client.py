@@ -2,6 +2,7 @@ import base64
 import paramiko
 import traceback
 import os
+import re
 
 from paramiko import SSHClient
 
@@ -27,30 +28,28 @@ def r710_ssh(cmd, username, password):
     # make a ssh client instance
     # return output of a command given in arguments perhaps.
 
-def r710_sftp():
+def r710_sftp_get(username, password, filename):
+    #Return a file retrieved via sftp
+    #relative to ~/
+
     hostname = "192.168.0.155" #r710 server.
-    username = "kf2server"
-    password = "bonesniff"
+
     #load host keys
     host_keys = paramiko.util.load_host_keys(
         os.path.expanduser("~/.ssh/known_hosts")
     )
+
     if hostname in host_keys:
         hostkeytype = host_keys[hostname].keys()[0]
         hostkey = host_keys[hostname][hostkeytype]
+    else:
+        print("No host key")
+    t = paramiko.Transport((hostname, 22))
+    t.connect(hostkey, username, password)
+    sftp = paramiko.SFTPClient.from_transport(t)
 
-    try:
-        t = paramiko.Transport((hostname, 22))
-        t.connect(hostkey, username, password)
-        sftp = paramiko.SFTPClient.from_transport(t)
-        dirlist = sftp.listdir(".")
-        print(f"Dirlist: {dirlist}")
-        t.close()
-
-    except Exception as e:
-        print("*** Caught exception: %s: %s" % (e.__class__, e))
-        traceback.print_exc()
-        try:
-            t.close()
-        except:
-            pass
+    #Read file located at this location.
+    sftp_file = sftp.file(f"/home/{username}/serverfiles/{filename}", mode="r").read()
+    print(sftp_file)
+    t.close()
+    return sftp_file
