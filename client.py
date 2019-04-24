@@ -50,6 +50,6 @@ def r710_sftp_get(username, password, filename):
 
     #Read file located at this location.
     sftp_file = sftp.file(f"/home/{username}/serverfiles/{filename}", mode="r").read()
-    print(sftp_file)
+    #print(sftp_file)
     t.close()
     return sftp_file
